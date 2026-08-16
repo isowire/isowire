@@ -126,7 +126,7 @@ import com.isowire.iso.ISORequestListener;
 
 public class PaymentServer {
     public static void main(String[] args) throws IOException {
-        ISOServer server = new ISOServer(9999, 50);
+        ISOServer server = new ISOServer(9999, () -> new ASCII4ISOChannel(new ISODefaultPackager(), new TCPTransportChannel()));
         server.setRequestListener(new PaymentRequestListener());
         server.start();
     }
@@ -353,7 +353,7 @@ mvn clean package
 ```xml
 <dependency>
     <groupId>com.isowire</groupId>
-    <artifactId>mpos</artifactId>
+    <artifactId>isowire</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
@@ -363,27 +363,70 @@ mvn clean package
 ```java
 @Configuration
 public class IsoWireConfig {
-    
+
     @Bean
     public ISOServer isoServer(ISORequestListener requestListener) {
-        ISOServer server = new ISOServer(9999, 50);
+        ISOServer server = new ISOServer(9999, channelSupplier("ASCII4"));
         server.setRequestListener(requestListener);
         return server;
     }
-    
+
     @Bean
-    public ASCIIISOChannel isoChannel() {
-        return new ASCIIISOChannel("payment-host", 9999);
+    public Supplier<ISOServerChannel> channelSupplier(String channelType) {
+        return () -> {
+            BaseISOChannel channel = switch (channelType) {
+                case "BINARY2" -> new Binary2ISOChannel(new ISODefaultPackager(), new TCPTransportChannel());
+                default        -> new ASCII4ISOChannel(new ISODefaultPackager(), new TCPTransportChannel());
+            };
+
+            channel.setHeader("6000000000");
+            return channel;
+        };
+    }
+
+    @Bean
+    public SmartLifecycle isoServerLifecycle(ISOServer server) {
+        return new SmartLifecycle() {
+
+            @Override
+            public void start() {
+                Thread.ofVirtual()
+                        .name("isowire-server")
+                        .start(() -> {
+                            try {
+                                server.start();
+                            } catch (IOException e) {
+                                throw new UncheckedIOException(e);
+                            }
+                        });
+            }
+
+            @Override
+            public void stop() {
+                server.stop();
+            }
+
+            @Override
+            public boolean isRunning() {
+                return server.isRunning();
+            }
+
+            @Override
+            public boolean isAutoStartup() {
+                return true;
+            }
+        };
     }
 }
 ```
+
 
 ## Logging
 
 IsoWire uses SLF4J with Logback for flexible logging:
 
 - **Console**: Real-time logging during development
-- **File**: `logs/mpos-server.log` with automatic rotation
+- **File**: `logs/isowire-server.log` with automatic rotation
 - **Configurable**: Log levels and formats in `logback.xml`
 
 ## Performance

@@ -439,7 +439,7 @@ telnet localhost 9999
 
 1. **Virtual Threads**: Java 25 virtual threads handle high concurrency automatically
    ```java
-   ISOServer server = new ISOServer(9999, 10); // 10 virtual threads
+   ISOServer server = new ISOServer(9999); // virtual threads scale automatically
    ```
 
 2. **Channel Reuse**: Reuse channels when possible instead of reconnecting
@@ -476,20 +476,63 @@ IsoWire is ideal for:
 ```java
 @Configuration
 public class IsoWireConfig {
-    
-    @Bean
-    public ISOServer isoServer(ISORequestListener requestListener) {
-        ISOServer server = new ISOServer(9999, 50);
-        server.setRequestListener(requestListener);
-        return server;
-    }
-    
-    @Bean
-    public ASCIIISOChannel isoChannel() {
-        return new ASCIIISOChannel("payment-host", 9999);
-    }
+
+   @Bean
+   public ISOServer isoServer(ISORequestListener requestListener) {
+      ISOServer server = new ISOServer(9999, channelSupplier("ASCII4"));
+      server.setRequestListener(requestListener);
+      return server;
+   }
+
+   @Bean
+   public Supplier<ISOServerChannel> channelSupplier(String channelType) {
+      return () -> {
+         BaseISOChannel channel = switch (channelType) {
+            case "BINARY2" -> new Binary2ISOChannel(new ISODefaultPackager(), new TCPTransportChannel());
+            default        -> new ASCII4ISOChannel(new ISODefaultPackager(), new TCPTransportChannel());
+         };
+
+         channel.setHeader("6000000000");
+         return channel;
+      };
+   }
+
+   @Bean
+   public SmartLifecycle isoServerLifecycle(ISOServer server) {
+      return new SmartLifecycle() {
+
+         @Override
+         public void start() {
+            Thread.ofVirtual()
+                    .name("isowire-server")
+                    .start(() -> {
+                       try {
+                          server.start();
+                       } catch (IOException e) {
+                          throw new UncheckedIOException(e);
+                       }
+                    });
+         }
+
+         @Override
+         public void stop() {
+            server.stop();
+         }
+
+         @Override
+         public boolean isRunning() {
+            return server.isRunning();
+         }
+
+         @Override
+         public boolean isAutoStartup() {
+            return true;
+         }
+      };
+   }
 }
 ```
+
 
 ### Dependency Injection
 
