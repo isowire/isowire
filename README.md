@@ -6,21 +6,7 @@ A comprehensive ISO8583 library for building financial transaction systems. IsoW
 
 IsoWire is a lightweight, modern ISO8583 framework designed for financial applications requiring payment message processing. It simplifies the development of ATM, POS, and banking gateway systems by providing a clean, extensible architecture with YAML-based configuration.
 
-## Features
-
-- **Complete ISO8583 Support**: Full message parsing, formatting, and validation
-- **YAML Configuration**: Easy field definitions in `iso8583-fields.yaml` with 120 pre-configured fields
-- **Flexible Channels**: Pluggable channel architecture for different protocols (ASCII, Binary)
-- **Server**: Virtual thread-based ISO8583 server with connection management
-- **Request/Response Management**: Built-in timeout handling and correlation
-- **Field Packagers**: Support for fixed-length, LLCHAR, LLLCHAR fields with subfields
-- **Modern Java**: Built with Java 25 features (Records, Pattern Matching, Virtual Threads, Switch Expressions)
-- **Extensible Architecture**: Easy to customize for specific payment network requirements
-- **Maven Integration**: Standard dependency management and build process
-
-- **Dynamic Bitmap Support**: The packager writes 8 or 16 byte bitmaps automatically depending on field presence; secondary-bitmap indicator is set before packing.
-
-- **Bug fixes**: Fixed subfield unpack boundary handling and corrected example server argument parsing. The YAML top-level keys encoding/binaryEncoding/bitmapFormat were removed to avoid confusion; field config remains YAML-driven.
+ **Dynamic Bitmap Support**: The packager writes 8 or 16 byte bitmaps automatically depending on field presence; secondary-bitmap indicator is set before packing.
 
 ## Architecture
 
@@ -226,9 +212,6 @@ msg.set(41, "TERM01");  // Terminal ID (length 8)
 ```java
 msg.set(2, "1234567890123456"); // PAN (LLCHAR, max 99)
 // On wire: "161234567890123456" (2-digit length + data, no padding)
-
-msg.set(48, "TAG1VALUE1TAG2VALUE2"); // LLCHAR with subfields (see field configuration)
-// On wire: length-prefixed data per LLCHAR packager
 ```
 
 **Dynamic Length Validation:**
@@ -292,7 +275,7 @@ public class SSLChannel extends BaseISOChannel {
 
 ### Extended Configuration
 
-Add custom fields to `iso8583-fields.yaml`:
+Add subfields to `iso8583-fields.yaml`:
 
 ```yaml
 - id: 60
@@ -308,20 +291,6 @@ Add custom fields to `iso8583-fields.yaml`:
       description: "Authentication type indicator"
 ```
 
-**Subfield Configuration:**
-```yaml
-- id: 48
-  name: "Additional Data"
-  type: "com.isowire.iso.LLCHAR"
-  length: 999
-  description: "Additional data - Private use"
-  subFields:
-    - id: 0x01
-      name: "Subfield_1"
-      type: "com.isowire.iso.LLCHAR"
-      length: 999
-      description: "Custom subfield (use a custom packager for special encodings)"
-```
 
 ## Building
 
