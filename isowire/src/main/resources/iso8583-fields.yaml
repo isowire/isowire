@@ -1,0 +1,792 @@
+config:
+  version: "1987"
+
+fields:
+  # MTI (Message Type Indicator)
+  - id: 0
+    name: "MTI"
+    type: "com.isowire.iso.CHAR"
+    length: 4
+    description: "Message Type Indicator"
+
+  # Bitmap
+  - id: 1
+    name: "BITMAP"
+    type: "com.isowire.iso.ASCII_BITMAP"
+    description: "Bitmap indicating which fields are present"
+
+  # Basic ISO 8583 fields
+  - id: 2
+    name: "PAN"
+    type: "com.isowire.iso.LLCHAR"
+    length: 99
+    description: "PAN - Primary Account Number"
+
+  - id: 3
+    name: "PROCESSING_CODE"
+    type: "com.isowire.iso.NUMERIC"
+    length: 6
+    description: "Processing Code"
+    subFields:
+      - id: 1
+        type: "com.isowire.iso.NUMERIC"
+        length: 2
+        description: "Transaction Type"
+      - id: 2
+        type: "com.isowire.iso.NUMERIC"
+        length: 2
+        description: "From account type"
+      - id: 3
+        type: "com.isowire.iso.NUMERIC"
+        length: 2
+        description: "To account type"
+
+  - id: 4
+    name: "AMOUNT_TRANSACTION"
+    type: "com.isowire.iso.AMOUNT"
+    length: 12
+    description: "Amount, Transaction"
+
+  - id: 5
+    name: "AMOUNT_SETTLEMENT"
+    type: "com.isowire.iso.CHAR"
+    length: 12
+    description: "Amount, Settlement"
+
+  - id: 6
+    name: "AMOUNT_CARDHOLDER_BILLING"
+    type: "com.isowire.iso.CHAR"
+    length: 12
+    description: "Amount, Cardholder Billing"
+
+  - id: 7
+    name: "TRANSMISSION_DATE_TIME"
+    type: "com.isowire.iso.CHAR"
+    length: 10
+    description: "Transmission Date and Time"
+
+  - id: 8
+    name: "AMOUNT_CARDHOLDER_BILLING_FEE"
+    type: "com.isowire.iso.CHAR"
+    length: 8
+    description: "Amount, Cardholder Billing Fee"
+
+  - id: 9
+    name: "CONVERSION_RATE_SETTLEMENT"
+    type: "com.isowire.iso.CHAR"
+    length: 8
+    description: "Conversion Rate, Settlement"
+
+  - id: 10
+    name: "CONVERSION_RATE_CARDHOLDER_BILLING"
+    type: "com.isowire.iso.CHAR"
+    length: 8
+    description: "Conversion Rate, Cardholder Billing"
+
+  - id: 11
+    name: "STAN"
+    type: "com.isowire.iso.CHAR"
+    length: 6
+    description: "System Trace Audit Number"
+
+  - id: 12
+    name: "LOCAL_TRANSACTION_TIME"
+    type: "com.isowire.iso.CHAR"
+    length: 6
+    description: "Time, Local Transaction"
+
+  - id: 13
+    name: "LOCAL_TRANSACTION_DATE"
+    type: "com.isowire.iso.CHAR"
+    length: 4
+    description: "Date, Local Transaction"
+
+  - id: 14
+    name: "EXPIRATION_DATE"
+    type: "com.isowire.iso.CHAR"
+    length: 4
+    description: "Date, Expiration"
+
+  - id: 15
+    name: "SETTLEMENT_DATE"
+    type: "com.isowire.iso.CHAR"
+    length: 4
+    description: "Date, Settlement"
+
+  - id: 16
+    name: "CONVERSION_DATE"
+    type: "com.isowire.iso.CHAR"
+    length: 4
+    description: "Date, Conversion"
+
+  - id: 17
+    name: "CAPTURE_DATE"
+    type: "com.isowire.iso.CHAR"
+    length: 4
+    description: "Date, Capture"
+
+  - id: 18
+    name: "MERCHANTS_TYPE"
+    type: "com.isowire.iso.CHAR"
+    length: 4
+    description: "Merchants Type"
+
+  - id: 19
+    name: "ACQUIRING_INSTITUTION_COUNTRY_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Acquiring Institution Country Code"
+
+  - id: 20
+    name: "PAN_EXTENDED_COUNTRY_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "PAN Extended Country Code"
+
+  - id: 21
+    name: "FORWARDING_INSTITUTION_COUNTRY_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Forwarding Institution Country Code"
+
+  - id: 22
+    name: "POS_ENTRY_MODE"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Point of Service Entry Mode"
+
+  - id: 23
+    name: "CARD_SEQUENCE_NUMBER"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Card Sequence Number"
+
+  - id: 24
+    name: "NETWORKinternational_identifieer"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Network International Identifieer"
+
+  - id: 25
+    name: "POS_CONDITION_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 2
+    description: "Point of Service Condition Code"
+
+  - id: 26
+    name: "POS_PIN_CAPTURE_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 2
+    description: "Point of Service PIN Capture Code"
+
+  - id: 27
+    name: "AUTHORIZATION_IDENTIFICATION_RESP_LEN"
+    type: "com.isowire.iso.CHAR"
+    length: 1
+    description: "Authorization Identification Resp Len"
+
+  - id: 28
+    name: "AMOUNT_TRANSACTION_FEE"
+    type: "com.isowire.iso.AMOUNT"
+    length: 9
+    description: "Amount, Transaction Fee"
+
+  - id: 29
+    name: "AMOUNT_SETTLEMENT_FEE"
+    type: "com.isowire.iso.AMOUNT"
+    length: 9
+    description: "Amount, Settlement Fee"
+
+  - id: 30
+    name: "AMOUNT_TRANSACTION_PROCESSING_FEE"
+    type: "com.isowire.iso.AMOUNT"
+    length: 9
+    description: "Amount, Transaction Processing Fee"
+
+  - id: 31
+    name: "AMOUNT_SETTLEMENT_PROCESSING_FEE"
+    type: "com.isowire.iso.AMOUNT"
+    length: 9
+    description: "Amount, Settlement Processing Fee"
+
+  - id: 32
+    name: "ACQUIRING_INSTITUTION_IDENT_CODE"
+    type: "com.isowire.iso.LLCHAR"
+    length: 99
+    description: "Acquiring Institution Ident Code"
+
+  - id: 33
+    name: "FORWARDING_INSTITUTION_IDENT_CODE"
+    type: "com.isowire.iso.LLCHAR"
+    length: 11
+    description: "Forwarding Institution Ident Code"
+
+  - id: 34
+    name: "PAN_EXTENDED"
+    type: "com.isowire.iso.LLCHAR"
+    length: 99
+    description: "PAN Extended"
+
+  - id: 35
+    name: "TRACK2_DATA"
+    type: "com.isowire.iso.LLCHAR"
+    length: 37
+    description: "Track 2 Data"
+
+  - id: 36
+    name: "TRACK3_DATA"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Track 3 Data"
+
+  - id: 37
+    name: "RETRIEVAL_REFERENCE_NUMBER"
+    type: "com.isowire.iso.CHAR"
+    length: 12
+    description: "Retrieval Reference Number"
+
+  - id: 38
+    name: "AUTHORIZATION_IDENTIFICATION_RESPONSE"
+    type: "com.isowire.iso.CHAR"
+    length: 6
+    description: "Authorization Identification Response"
+
+  - id: 39
+    name: "RESPONSE_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 2
+    description: "Response Code"
+
+  - id: 40
+    name: "SERVICE_RESTRICTION_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Service Restriction Code"
+
+  - id: 41
+    name: "CARD_ACCEPTOR_TERMINAL_IDENTIFICACION"
+    type: "com.isowire.iso.CHAR"
+    length: 16
+    description: "Card Acceptor Terminal Identificacion"
+
+  - id: 42
+    name: "CARD_ACCEPTOR_IDENTIFICATION_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 15
+    description: "Card Acceptor Identification Code"
+
+  - id: 43
+    name: "CARD_ACCEPTOR_NAME_LOCATION"
+    type: "com.isowire.iso.CHAR"
+    length: 40
+    description: "Card Acceptor Name/Location"
+
+  - id: 44
+    name: "ADITIONAL_RESPONSE_DATA"
+    type: "com.isowire.iso.CHAR"
+    length: 2
+    description: "Aditional Response Data"
+
+  - id: 45
+    name: "TRACK1_DATA"
+    type: "com.isowire.iso.LLCHAR"
+    length: 99
+    description: "Track 1 Data"
+
+  - id: 46
+    name: "ADDITIONAL_DATA_ISO"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Aditional Data - ISO"
+
+  - id: 47
+    name: "ADDITIONAL_DATA_NATIONAL"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Aditional Data - National"
+
+  - id: 48
+    name: "ADDITIONAL_DATA_PRIVATE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Aditional Data - Private"
+
+  - id: 49
+    name: "CURRENCY_CODE_TRANSACTION"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Currency Code, Transaction"
+
+  - id: 50
+    name: "CURRENCY_CODE_SETTLEMENT"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Currency Code, Settlement"
+
+  - id: 51
+    name: "CURRENCY_CODE_CARDHOLDER_BILLING"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Currency Code, Cardholder Billing"
+
+#  - id: 52
+#    name: "PIN_DATA"
+#    type: "com.isowire.iso.IF_BINARY"
+#    length: 8
+#    description: "PIN Data"
+
+  - id: 53
+    name: "SECURITY_RELATED_CONTROL_INFORMATION"
+    type: "com.isowire.iso.CHAR"
+    length: 16
+    description: "Security Related Control Information"
+
+  - id: 54
+    name: "ADDITIONAL_AMOUNTS"
+    type: "com.isowire.iso.LLCHAR"
+    length: 99
+    description: "Additional Amounts"
+
+  - id: 55
+    name: "RESERVED_ISO"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved ISO"
+
+  - id: 56
+    name: "RESERVED_ISO"
+    type: "com.isowire.iso.LLCHAR"
+    length: 99
+    description: "Reserved ISO"
+
+  - id: 57
+    name: "RESERVED_NATIONAL"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved National"
+
+  - id: 58
+    name: "RESERVED_NATIONAL"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved National"
+
+  - id: 59
+    name: "RESERVED_NATIONAL"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved National"
+
+  - id: 60
+    name: "RESERVED_PRIVATE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved Private"
+
+  - id: 61
+    name: "RESERVED_PRIVATE"
+    type: "com.isowire.iso.CHAR"
+    length: 14
+    description: "Reserved Private"
+
+  - id: 62
+    name: "RESERVED_PRIVATE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved Private"
+
+  - id: 63
+    name: "RESERVED_PRIVATE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved Private"
+
+#  - id: 64
+#    name: "MESSAGE_AUTHENTICATION_CODE_FIELD"
+#    type: "com.isowire.iso.IF_BINARY"
+#    length: 8
+#    description: "Message Authentication Code Field"
+
+#  - id: 65
+#    name: "BITMAP_EXTENDED"
+#    type: "com.isowire.iso.IF_BINARY"
+#    length: 1
+#    description: "Bitmap, Extended"
+
+  - id: 66
+    name: "SETTLEMENT_CODE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Settlement Code"
+
+  - id: 67
+    name: "EXTENDED_PAYMENT_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 2
+    description: "Extended Payment Code"
+
+  - id: 68
+    name: "RECEIVING_INSTITUTION_COUNTRY_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Receiving Institution Country Code"
+
+  - id: 69
+    name: "SETTLEMENT_INSTITUTION_COUNTRY_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Settlement Institution Country Code"
+
+  - id: 70
+    name: "NETWORK_MANAGEMENT_INFORMATION_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 3
+    description: "Network Management Information Code"
+
+  - id: 71
+    name: "MESSAGE_NUMBER"
+    type: "com.isowire.iso.CHAR"
+    length: 4
+    description: "Message Number"
+
+  - id: 72
+    name: "MESSAGE_NUMBER_LAST"
+    type: "com.isowire.iso.CHAR"
+    length: 4
+    description: "Message Number Last"
+
+  - id: 73
+    name: "DATE_ACTION"
+    type: "com.isowire.iso.CHAR"
+    length: 6
+    description: "Date Action"
+
+  - id: 74
+    name: "CREDITS_NUMBER"
+    type: "com.isowire.iso.CHAR"
+    length: 10
+    description: "Credits Number"
+
+  - id: 75
+    name: "CREDITS_REVERSAL_NUMBER"
+    type: "com.isowire.iso.CHAR"
+    length: 10
+    description: "Credits Reversal Number"
+
+  - id: 76
+    name: "DEBITS_NUMBER"
+    type: "com.isowire.iso.CHAR"
+    length: 10
+    description: "Debits Number"
+
+  - id: 77
+    name: "DEBITS_REVERSAL_NUMBER"
+    type: "com.isowire.iso.CHAR"
+    length: 10
+    description: "Debits Reversal Number"
+
+  - id: 78
+    name: "TRANSFER_NUMBER"
+    type: "com.isowire.iso.CHAR"
+    length: 10
+    description: "Transfer Number"
+
+  - id: 79
+    name: "TRANSFER_REVERSAL_NUMBER"
+    type: "com.isowire.iso.CHAR"
+    length: 10
+    description: "Transfer Reversal Number"
+
+  - id: 80
+    name: "INQUIRIES_NUMBER"
+    type: "com.isowire.iso.CHAR"
+    length: 10
+    description: "Inquiries Number"
+
+  - id: 81
+    name: "AUTHORIZATION_NUMBER"
+    type: "com.isowire.iso.CHAR"
+    length: 10
+    description: "Authorization Number"
+
+  - id: 82
+    name: "CREDITS_PROCESSING_FEE_AMOUNT"
+    type: "com.isowire.iso.CHAR"
+    length: 12
+    description: "Credits, Processing Fee Amount"
+
+  - id: 83
+    name: "CREDITS_TRANSACTION_FEE_AMOUNT"
+    type: "com.isowire.iso.CHAR"
+    length: 12
+    description: "Credits, Transaction Fee Amount"
+
+  - id: 84
+    name: "DEBITS_PROCESSING_FEE_AMOUNT"
+    type: "com.isowire.iso.CHAR"
+    length: 12
+    description: "Debits, Processing Fee Amount"
+
+  - id: 85
+    name: "DEBITS_TRANSACTION_FEE_AMOUNT"
+    type: "com.isowire.iso.CHAR"
+    length: 12
+    description: "Debits, Transaction Fee Amount"
+
+  - id: 86
+    name: "CREDITS_AMOUNT"
+    type: "com.isowire.iso.CHAR"
+    length: 16
+    description: "Credits, Amount"
+
+  - id: 87
+    name: "CREDITS_REVERSAL_AMOUNT"
+    type: "com.isowire.iso.CHAR"
+    length: 16
+    description: "Credits, Reversal Amount"
+
+  - id: 88
+    name: "DEBITS_AMOUNT"
+    type: "com.isowire.iso.CHAR"
+    length: 16
+    description: "Debits, Amount"
+
+  - id: 89
+    name: "DEBITS_REVERSAL_AMOUNT"
+    type: "com.isowire.iso.CHAR"
+    length: 16
+    description: "Debits, Reversal Amount"
+
+  - id: 90
+    name: "ORIGINAL_DATA_ELEMENTS"
+    type: "com.isowire.iso.CHAR"
+    length: 42
+    description: "Original Data Elements"
+
+  - id: 91
+    name: "FILE_UPDATE_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 1
+    description: "File Update Code"
+
+  - id: 92
+    name: "FILE_SECURITY_CODE"
+    type: "com.isowire.iso.CHAR"
+    length: 2
+    description: "File Security Code"
+
+  - id: 93
+    name: "RESPONSE_INDICATOR"
+    type: "com.isowire.iso.CHAR"
+    length: 6
+    description: "Response Indicator"
+
+  - id: 94
+    name: "SERVICE_INDICATOR"
+    type: "com.isowire.iso.CHAR"
+    length: 7
+    description: "Service Indicator"
+
+  - id: 95
+    name: "REPLACEMENT_AMOUNTS"
+    type: "com.isowire.iso.CHAR"
+    length: 42
+    description: "Replacement Amounts"
+
+#  - id: 96
+#    name: "MESSAGE_SECURITY_CODE"
+#    type: "com.isowire.iso.IFA_BINARY"
+#    length: 16
+#    description: "Message Security Code"
+
+  - id: 97
+    name: "AMOUNT_NET_SETTLEMENT"
+    type: "com.isowire.iso.AMOUNT"
+    length: 17
+    description: "Amount, Net Settlement"
+
+  - id: 98
+    name: "PAYEE"
+    type: "com.isowire.iso.CHAR"
+    length: 25
+    description: "Payee"
+
+  - id: 99
+    name: "SETTLEMENT_INSTITUTION_IDENT_CODE"
+    type: "com.isowire.iso.LLCHAR"
+    length: 11
+    description: "Settlement Institution Ident Code"
+
+  - id: 100
+    name: "RECEIVING_INSTITUTION_IDENT_CODE"
+    type: "com.isowire.iso.LLCHAR"
+    length: 11
+    description: "Receiving Institution Ident Code"
+
+  - id: 101
+    name: "FILE_NAME"
+    type: "com.isowire.iso.LLCHAR"
+    length: 99
+    description: "File Name"
+
+  - id: 102
+    name: "ACCOUNT_IDENTIFICATION_1"
+    type: "com.isowire.iso.LLCHAR"
+    length: 99
+    description: "Account Identification 1"
+
+  - id: 103
+    name: "ACCOUNT_IDENTIFICATION_2"
+    type: "com.isowire.iso.LLCHAR"
+    length: 99
+    description: "Account Identification 2"
+
+  - id: 104
+    name: "TRANSACTION_DESCRIPTION"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Transaction Description"
+
+  - id: 105
+    name: "RESERVED_ISO_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved ISO Use"
+
+  - id: 106
+    name: "RESERVED_ISO_USE"
+    type: "com.isowire.iso.CHAR"
+    length: 46
+    description: "Reserved ISO Use"
+
+  - id: 107
+    name: "RESERVED_ISO_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved ISO Use"
+
+  - id: 108
+    name: "RESERVED_ISO_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved ISO Use"
+
+  - id: 109
+    name: "RESERVED_ISO_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved ISO Use"
+
+  - id: 110
+    name: "RESERVED_ISO_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved ISO Use"
+
+  - id: 111
+    name: "RESERVED_ISO_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved ISO Use"
+
+  - id: 112
+    name: "RESERVED_NATIONAL_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved National Use"
+
+  - id: 113
+    name: "RESERVED_NATIONAL_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved National Use"
+
+  - id: 114
+    name: "RESERVED_NATIONAL_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved National Use"
+
+  - id: 115
+    name: "RESERVED_NATIONAL_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved National Use"
+
+  - id: 116
+    name: "RESERVED_NATIONAL_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved National Use"
+
+  - id: 117
+    name: "RESERVED_NATIONAL_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved National Use"
+
+  - id: 118
+    name: "RESERVED_NATIONAL_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved National Use"
+
+  - id: 119
+    name: "RESERVED_NATIONAL_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved National Use"
+
+  - id: 120
+    name: "RESERVED_PRIVATE_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved Private Use"
+
+  - id: 121
+    name: "RESERVED_PRIVATE_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved Private Use"
+
+  - id: 122
+    name: "RESERVED_PRIVATE_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved Private Use"
+
+  - id: 123
+    name: "RESERVED_PRIVATE_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved Private Use"
+
+  - id: 124
+    name: "RESERVED_PRIVATE_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved Private Use"
+
+  - id: 125
+    name: "RESERVED_PRIVATE_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved Private Use"
+
+  - id: 126
+    name: "RESERVED_PRIVATE_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved Private Use"
+
+  - id: 127
+    name: "RESERVED_PRIVATE_USE"
+    type: "com.isowire.iso.LLLCHAR"
+    length: 999
+    description: "Reserved Private Use"
+
+#  - id: 128
+#    name: "MAC_2"
+#    type: "com.isowire.iso.IFA_BINARY"
+#    length: 8
+#    description: "MAC 2"
