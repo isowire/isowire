@@ -21,6 +21,10 @@ public class TCPTransportChannel implements TransportChannel {
     private OutputStream outputStream;
     private int timeout = 30000; // 30 seconds default
 
+    public TCPTransportChannel() {
+        this(null,0);
+    }
+
     public TCPTransportChannel(String host, int port) {
         this.host = host;
         this.port = port;

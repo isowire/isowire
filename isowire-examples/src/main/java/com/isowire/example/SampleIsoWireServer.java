@@ -40,7 +40,7 @@ public class SampleIsoWireServer {
             channel = args[2];
         }
 
-        ISOServer server = new ISOServer(port, channelSupplier(port, channel));
+        ISOServer server = new ISOServer(port, channelSupplier(channel));
         server.setRequestListener(new SampleRequestListener());
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -57,11 +57,11 @@ public class SampleIsoWireServer {
         }
     }
 
-    public static Supplier<ISOServerChannel> channelSupplier(final int port, String channelType) {
+    public static Supplier<ISOServerChannel> channelSupplier(String channelType) {
         return () -> {
             BaseISOChannel channel = switch (channelType) {
-                case "BINARY2" -> new Binary2ISOChannel(new ISODefaultPackager(), new TCPTransportChannel(null, port));
-                default        -> new ASCII4ISOChannel(new ISODefaultPackager(), new TCPTransportChannel(null, port));
+                case "BINARY2" -> new Binary2ISOChannel(new ISODefaultPackager(), new TCPTransportChannel());
+                default        -> new ASCII4ISOChannel(new ISODefaultPackager(), new TCPTransportChannel());
             };
 
             channel.setHeader("6000000000");
